@@ -66,8 +66,6 @@ func (h Handler) GetByQuestion(c *gin.Context) {
 		return
 	}
 
-	question = refactorQuestion(question)
-
 	resp, err := h.Queries.GetByQuestion(c, question)
 	if err != nil {
 		err := err.(errors.ErrorResponse)
@@ -126,12 +124,6 @@ func validateInput(input *models.QueryInfo) error {
 	if input.Question == "" {
 		return errors.ErrorResponse{Code: "BAD REQUEST", Reason: "Missing Field Question"}
 	}
-
-	if input.Solution == "" {
-		return errors.ErrorResponse{Code: "BAD REQUEST", Reason: "Missing Field Solution"}
-	}
-
-	input.Question = refactorQuestion(input.Question)
 
 	return nil
 }
